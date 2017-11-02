@@ -12,5 +12,15 @@ import org.slf4j.LoggerFactory;
  */
 public class Configuration {
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
+    private String encoding= "UTF-8";
+    private Class<?> applicationClass;
+    private String classPath= "config";
+    private String basePackage;
 
+    public Configuration() {
+    }
+
+    public void setApplicationClass(Class<?> applicationClass) {
+        this.applicationClass = applicationClass;
+    }
 }

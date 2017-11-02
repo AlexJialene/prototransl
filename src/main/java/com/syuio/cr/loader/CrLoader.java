@@ -1,5 +1,7 @@
 package com.syuio.cr.loader;
 
+import com.syuio.cr.CrApplication;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Alex_
@@ -7,4 +9,6 @@ package com.syuio.cr.loader;
  * Time: 17:53
  */
 public interface CrLoader {
+
+    void load(CrApplication crApplication);
 }
