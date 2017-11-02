@@ -25,6 +25,7 @@ public class Syuio {
 
     public boolean start(Class<?> applicationClass) {
         //TODO 初始化所有注解配置好容器
+        //TODO
         return true;
     }
 
