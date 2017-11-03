@@ -13,7 +13,7 @@ import java.util.*;
  * Date: 2017/11/2
  * Time: 17:54
  */
-public class CrApplication implements Cr {
+public final class CrApplication implements Cr {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrApplication.class);
     private final Map<String, BeanDetermine> map = Collections.synchronizedMap(new HashMap<>(12));
 
@@ -50,18 +50,25 @@ public class CrApplication implements Cr {
 
     @Override
     public Object getBean(String var1) {
-        return null;
+        BeanDetermine beanDetermine = this.map.get(var1);
+        return beanDetermine == null ? null : beanDetermine.getBean();
     }
 
     @Override
-    public List<BeanDetermine> getBeanDefines() {
+    public List<BeanDetermine> getDetermines() {
         return new ArrayList<>(this.map.values());
     }
 
     @Override
     public List<Object> getBeans() {
-
-        return null;
+        Set<String> beanNames = this.getBeanNames();
+        List<Object> beans = new ArrayList<>(beanNames.size());
+        beanNames.forEach(beanName ->{
+            Object bean = this.getBean(beanName);
+            if (null != bean)
+                beans.add(bean);
+        });
+        return beans;
     }
 
     @Override
@@ -71,16 +78,18 @@ public class CrApplication implements Cr {
 
     @Override
     public void remove(Class<?> var1) {
-
+        this.map.remove(var1.getSimpleName());
     }
 
     @Override
     public void remove(String var1) {
-
+        this.map.remove(var1);
     }
 
     @Override
     public void clearAll() {
-
+        this.map.clear();
     }
+
+
 }

@@ -23,7 +23,7 @@ public interface Cr {
 
     Object getBean(String var1);
 
-    List<BeanDetermine> getBeanDefines();
+    List<BeanDetermine> getDetermines();
 
     List<Object> getBeans();
 

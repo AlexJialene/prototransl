@@ -17,4 +17,11 @@ public class Assert {
             throw new NullPointerException(message);
     }
 
+    public static void notBlank(CharSequence str) {
+        if(str == null) {
+            throw new NullPointerException("[failed] - The validated string is blank");
+        } else if(0 == str.toString().trim().length()) {
+            throw new IllegalArgumentException("[failed] - The validated string is blank");
+        }
+    }
 }

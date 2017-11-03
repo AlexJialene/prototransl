@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 /**
  * Created by IntelliJ IDEA.
  * User: Alex_
- * Date: 2017/11/2
- * Time: 23:49
+ * Date: 2017/11/3
+ * Time: 10:10
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface ProtocolService {
+public @interface Protocol {
 }
