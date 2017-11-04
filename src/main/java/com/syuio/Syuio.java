@@ -53,7 +53,9 @@ public class Syuio {
             this.isInit = true;
     }
 
-
+    public boolean isInit() {
+        return isInit;
+    }
 
     private static final class SyuioHelper {
         private static final Syuio s = new Syuio();

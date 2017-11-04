@@ -32,7 +32,7 @@ public class Configuration {
         this.config.loadSystemProperties();
     }
 
-    public Config getConfig() {
+    protected Config getConfig() {
         return config;
     }
 
@@ -42,7 +42,7 @@ public class Configuration {
             this.isScanRecursively = this.getConfig().getBoolean(SyuioEnv.SCAN_RECURSIVELY.key, true);
             this.port = this.getConfig().getInteger(SyuioEnv.PORT.key, 9876);
 
-            LOGGER.info("The built-in port is {}" ,getPort());
+            LOGGER.info("The built-in port is {}", getPort());
 
             this.isInit = true;
         }
@@ -65,7 +65,11 @@ public class Configuration {
         return isInit;
     }
 
-    protected enum SyuioEnv {
+    public String getProperties(SyuioEnv env) {
+        return getConfig().get(env.key);
+    }
+
+    public enum SyuioEnv {
         BASE_PACKAGE("syuio.basePackage"),
         PROTOCOL_PACKAGE("syuio.protocol.protocolPackage"),
         SERVICE_PACKAGE("syuio.protocol.servicePackage"),

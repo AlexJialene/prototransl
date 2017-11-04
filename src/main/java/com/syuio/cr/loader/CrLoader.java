@@ -1,5 +1,6 @@
 package com.syuio.cr.loader;
 
+import com.syuio.cr.Cr;
 import com.syuio.cr.CrApplication;
 
 import java.util.function.Function;
@@ -13,6 +14,6 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface CrLoader {
 
-    void load(CrApplication crApplication);
+    void load(Cr ioc);
 
 }

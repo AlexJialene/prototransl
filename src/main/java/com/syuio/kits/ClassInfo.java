@@ -10,8 +10,9 @@ public class ClassInfo {
     private String className;
     private Class<?> clazz;
 
-    public ClassInfo(String className) {
-        this.className = className;
+    public ClassInfo(Class<?> clazz) {
+        this.className = clazz.getName();
+        this.clazz = clazz;
     }
 
     public ClassInfo(String className, Class<?> clazz) {

@@ -2,6 +2,7 @@ package com.syuio.cr;
 
 import com.syuio.cr.loader.CrLoader;
 import com.syuio.kits.Assert;
+import com.syuio.kits.CollectionConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import java.util.*;
  */
 public final class CrApplication implements Cr {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrApplication.class);
-    private final Map<String, BeanDetermine> map = Collections.synchronizedMap(new HashMap<>(12));
+    private final Map<String, BeanDetermine> map = CollectionConfigure.newConcurrentHashMap(16);
 
     public CrApplication() {
     }
