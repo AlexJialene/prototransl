@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,14 +17,15 @@ import java.util.*;
  */
 public final class CrApplication implements Cr {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrApplication.class);
+    //All Protocol save this
     private final Map<String, BeanDetermine> map = CollectionConfigure.newConcurrentHashMap(16);
 
     public CrApplication() {
     }
 
     @Override
-    public void load(CrLoader var1) {
-        var1.load(this);
+    public void load(Supplier<CrLoader> var1) {
+        var1.get().load(this);
     }
 
     @Override

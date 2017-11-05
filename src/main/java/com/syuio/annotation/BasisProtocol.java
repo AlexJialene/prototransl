@@ -8,11 +8,11 @@ import java.lang.annotation.Target;
 /**
  * Created by IntelliJ IDEA.
  * User: Alex_
- * Date: 2017/11/2
- * Time: 23:47
+ * Date: 2017/11/5
+ * Time: 0:40
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface InjProtocol {
-    int mType() ;
+@Target(ElementType.TYPE)
+public @interface BasisProtocol {
+
 }

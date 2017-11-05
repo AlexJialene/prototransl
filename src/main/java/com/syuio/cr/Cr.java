@@ -4,6 +4,7 @@ import com.syuio.cr.loader.CrLoader;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 public interface Cr {
 
-    void load(CrLoader var1);
+    void load(Supplier<CrLoader> var1);
 
     void addBean(Object var1);
 

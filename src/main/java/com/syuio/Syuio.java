@@ -34,8 +34,8 @@ public class Syuio {
         this.getConfig().loadSyuioConfig("classpath:syuio.properties");
         if (!getConfig().isInit()){
             this.getConfig().setEnvironment();
-            this.getIoc().load(new CrAnnotationLoader());
-            this.init();
+            this.getIoc().load(CrAnnotationLoader::new);
+            //this.init();
         }
         return true;
     }

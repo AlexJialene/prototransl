@@ -13,20 +13,23 @@ import java.util.Map;
  * Time: 15:59
  */
 public class ProtocolMethod {
+    private String beLongBeanName;
     private Method action;
     private String actionName;
+    private Integer mType;
     private Map<String, String> param = CollectionConfigure.newHashMap();
 
     public ProtocolMethod() {
     }
 
-    public ProtocolMethod(Method action, String actionName) {
+    public ProtocolMethod(Method action, String actionName , String beLongBeanName) {
         this.action = action;
         this.actionName = actionName;
+        this.beLongBeanName = beLongBeanName;
     }
 
-    public ProtocolMethod(Method action) {
-        this.action = action;
+    public ProtocolMethod(Method action , String beLongBeanName) {
+        this(action , action.getName() , beLongBeanName);
     }
 
     public ProtocolMethod(Method action, String actionName, Map<String, String> param) {
@@ -57,5 +60,13 @@ public class ProtocolMethod {
 
     public void setParam(Map<String, String> param) {
         this.param = param;
+    }
+
+    public Integer getmType() {
+        return mType;
+    }
+
+    public void setmType(Integer mType) {
+        this.mType = mType;
     }
 }

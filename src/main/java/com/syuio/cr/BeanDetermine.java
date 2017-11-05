@@ -12,6 +12,8 @@ public class BeanDetermine {
     private Object bean;
     private Class<?> clazz;
     private Target target;
+    private Integer mType;
+    protected boolean isSignle;
 
     public BeanDetermine(Object bean) {
         this(bean, bean.getClass());
