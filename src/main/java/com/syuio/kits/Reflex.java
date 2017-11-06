@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Reflex {
 
     public static Collection<?> findInternalClassByAnno(Collection<ClassInfo> collection, Class<? extends Annotation> anno) {
-        if (CollectionConfigure.isNotEmpty(collection)) {
+        if (VolumeKit.isNotEmpty(collection)) {
             return collection.stream()
                     .flatMap(classInfo -> Arrays.stream(classInfo.getClazz().getDeclaredClasses())
                             .filter(aClass -> null != aClass.getAnnotation(anno)))

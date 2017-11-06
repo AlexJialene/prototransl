@@ -4,7 +4,7 @@ import com.syuio.config.Configuration;
 import com.syuio.cr.Cr;
 import com.syuio.cr.CrApplication;
 import com.syuio.cr.loader.CrAnnotationLoader;
-import com.syuio.cr.loader.CrLoader;
+import com.syuio.proto.handle.ProtocolApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +19,7 @@ public class Syuio {
     private boolean isInit;
     private Cr ioc;
     private Configuration config;
+    private ProtocolApp protocolApp;
 
     public Syuio() {
         this.isInit = false;
@@ -32,7 +33,7 @@ public class Syuio {
 
     public boolean start(Class<?> applicationClass) {
         this.getConfig().loadSyuioConfig("classpath:syuio.properties");
-        if (!getConfig().isInit()){
+        if (!getConfig().isInit()) {
             this.getConfig().setEnvironment();
             this.getIoc().load(CrAnnotationLoader::new);
             //this.init();
@@ -48,13 +49,21 @@ public class Syuio {
         return config;
     }
 
-    public void init(){
+    public void init() {
         if (!this.isInit)
             this.isInit = true;
     }
 
     public boolean isInit() {
         return isInit;
+    }
+
+    public ProtocolApp createProtocolApp() {
+        return this.protocolApp;
+    }
+
+    public void setProtocolApp(ProtocolApp protocolApp) {
+        this.protocolApp = protocolApp;
     }
 
     private static final class SyuioHelper {

@@ -1,7 +1,7 @@
 package com.syuio.cr.finder;
 
 import com.syuio.kits.ClassInfo;
-import com.syuio.kits.CollectionConfigure;
+import com.syuio.kits.VolumeKit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +30,14 @@ public class JarClassFinder implements ClassFinder {
 
     @Override
     public Set<ClassInfo> getClass(String packageName, Class<?> clazz, Class<? extends Annotation> anno, boolean recursive) {
-        Set<ClassInfo> classInfos = CollectionConfigure.newHashSet();
+        Set<ClassInfo> classInfos = VolumeKit.newHashSet();
         String packageDirName = packageName.replace(".", "/");
         try {
             //Defines an enumerated collection and loops to process the URL in this directory
             Enumeration<URL> dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
             while (dirs.hasMoreElements()) {
                 URL url = dirs.nextElement();
-                Set<ClassInfo> classess = this.getJarClasses(url, packageDirName, packageName, clazz, anno, recursive, CollectionConfigure.newHashSet());
+                Set<ClassInfo> classess = this.getJarClasses(url, packageDirName, packageName, clazz, anno, recursive, VolumeKit.newHashSet());
                 if (null != classess && 0 < classess.size())
                     classInfos.addAll(classess);
             }

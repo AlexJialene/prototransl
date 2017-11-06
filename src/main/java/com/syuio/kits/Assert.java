@@ -24,4 +24,11 @@ public class Assert {
             throw new IllegalArgumentException("[failed] - The validated string is blank");
         }
     }
+
+    public static void trueException(boolean ex , String message, Object...value){
+        if (ex){
+            throw new IllegalArgumentException(String.format(message, value));
+        }
+    }
+
 }

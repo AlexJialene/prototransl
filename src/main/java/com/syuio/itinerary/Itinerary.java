@@ -1,9 +1,8 @@
-package com.syuio.method;
+package com.syuio.itinerary;
 
-import com.syuio.kits.CollectionConfigure;
+import com.syuio.kits.VolumeKit;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,27 +11,27 @@ import java.util.Map;
  * Date: 2017/11/4
  * Time: 15:59
  */
-public class ProtocolMethod {
+public class Itinerary {
     private String beLongBeanName;
     private Method action;
     private String actionName;
     private Integer mType;
-    private Map<String, String> param = CollectionConfigure.newHashMap();
+    private Map<String, String> param = VolumeKit.newHashMap();
 
-    public ProtocolMethod() {
+    public Itinerary() {
     }
 
-    public ProtocolMethod(Method action, String actionName , String beLongBeanName) {
+    public Itinerary(Method action, String actionName , String beLongBeanName) {
         this.action = action;
         this.actionName = actionName;
         this.beLongBeanName = beLongBeanName;
     }
 
-    public ProtocolMethod(Method action , String beLongBeanName) {
+    public Itinerary(Method action , String beLongBeanName) {
         this(action , action.getName() , beLongBeanName);
     }
 
-    public ProtocolMethod(Method action, String actionName, Map<String, String> param) {
+    public Itinerary(Method action, String actionName, Map<String, String> param) {
         this.action = action;
         this.actionName = actionName;
         this.param = param;

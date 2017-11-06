@@ -3,7 +3,7 @@ package com.syuio.cr.finder;
 import com.syuio.annotation.Protocol;
 import com.syuio.kits.Assert;
 import com.syuio.kits.ClassInfo;
-import com.syuio.kits.CollectionConfigure;
+import com.syuio.kits.VolumeKit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class ClassPathFinder implements ClassFinder {
     @Override
     public Set<ClassInfo> getClass(String packageName, Class<?> clazz, Class<? extends Annotation> anno, boolean recursive) {
         Assert.notBlank(packageName);
-        Set<ClassInfo> set = CollectionConfigure.newHashSet();
+        Set<ClassInfo> set = VolumeKit.newHashSet();
         packageName = packageName.replace(".", "/");
         try {
             Enumeration dirs = Thread.currentThread().getContextClassLoader().getResources(packageName);
@@ -43,7 +43,7 @@ public class ClassPathFinder implements ClassFinder {
                 String filePath = new URI(url.getFile()).getPath();
                 //String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
                 //LOGGER.info("filepath = {}" ,filePath);
-                Set<ClassInfo> classInfos = getClassByPackagePath(packageName, filePath, clazz, anno, recursive, CollectionConfigure.newHashSet());
+                Set<ClassInfo> classInfos = getClassByPackagePath(packageName, filePath, clazz, anno, recursive, VolumeKit.newHashSet());
                 if (null != classInfos && 0 < classInfos.size())
                     set.addAll(classInfos);
             }

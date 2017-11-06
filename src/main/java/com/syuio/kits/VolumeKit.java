@@ -10,11 +10,11 @@ import java.util.concurrent.*;
  * Date: 2017/11/4
  * Time: 16:12
  */
-public abstract class CollectionConfigure {
+public abstract class VolumeKit {
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
     private static final int DEFAULT_CONCURRENCY_LEVEL = 4;
 
-    public CollectionConfigure() {
+    public VolumeKit() {
     }
 
     public static <K, V> HashMap<K, V> newHashMap() {

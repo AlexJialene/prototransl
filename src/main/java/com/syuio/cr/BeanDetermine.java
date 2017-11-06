@@ -9,25 +9,23 @@ import com.syuio.kits.Target;
  * Time: 0:57
  */
 public class BeanDetermine {
+    private boolean isSignle;
     private Object bean;
     private Class<?> clazz;
-    private Target target;
-    private Integer mType;
-    protected boolean isSignle;
 
     public BeanDetermine(Object bean) {
         this(bean, bean.getClass());
     }
 
     public BeanDetermine(Object bean, Class<?> clazz) {
-        this(bean, clazz, Target.PROTOCOL);
-
+        this(bean, clazz, true);
     }
 
-    public BeanDetermine(Object bean, Class<?> clazz, Target target) {
+    public BeanDetermine(Object bean, Class<?> clazz, boolean isSignle) {
         this.bean = bean;
         this.clazz = clazz;
-        this.target = target;
+        this.isSignle = isSignle;
+
     }
 
     public Object getBean() {
@@ -38,27 +36,19 @@ public class BeanDetermine {
         this.bean = bean;
     }
 
-    public Class<?> getType() {
+    public Class<?> getClazz() {
         return clazz;
-    }
-
-    public void setType(Class<?> clazz) {
-        this.clazz = clazz;
     }
 
     public void setClazz(Class<?> clazz) {
         this.clazz = clazz;
     }
 
-    public void setTarget(Target target) {
-        this.target = target;
+    public boolean isSignle() {
+        return isSignle;
     }
 
-    public Class<?> getClazz() {
-        return clazz;
-    }
-
-    public Target getTarget() {
-        return target;
+    public void setSignle(boolean signle) {
+        isSignle = signle;
     }
 }

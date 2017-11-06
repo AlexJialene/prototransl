@@ -1,6 +1,7 @@
 package com.syuio.cr;
 
 import com.syuio.cr.loader.CrLoader;
+import com.syuio.kits.Target;
 
 import java.util.List;
 import java.util.Set;
@@ -20,15 +21,19 @@ public interface Cr {
 
     void addBean(String var1, Object var2);
 
-    void setBean(Class<?> var1, Object var2);
+    void addBean(Class<?> var2, Target target);
 
-    Object getBean(String var1);
+    void addBean(Class<?> var1);
 
     List<BeanDetermine> getDetermines();
 
     List<Object> getBeans();
 
     Set<String> getBeanNames();
+
+    Object getBean(String var1);
+
+    void setBean(Class<?> var1, Object var2);
 
     void remove(Class<?> var1);
 
