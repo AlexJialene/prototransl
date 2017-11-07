@@ -31,17 +31,17 @@ public class ProtoApplication {
         this.ioc = cr;
     }
 
-    public void initProtocol(Collection<ClassInfo> protocol ,ProtocolReflex reflex) {
+    public void initProtocol(Collection<ClassInfo> protocol, ProtocolReflex reflex) {
         if (!this.isInit) {
             if (VolumeKit.isNotEmpty(protocol)) {
                 protocol.stream().forEach(classInfo -> {
                     Protocol p = classInfo.getClazz().getAnnotation(Protocol.class);
                     if (null != p) {
-                        put(p.mType() , classInfo.getClassName());
-                        this.ioc.addBean(classInfo.getClazz() , Target.PROTOCOL);
+                        put(p.mType(), classInfo.getClassName());
+                        this.ioc.addBean(classInfo.getClazz(), Target.PROTOCOL);
                     }
                 });
-                Syuio.syuio().setProtocolApp(new SimpleProtocolApplication(this ,reflex));
+                Syuio.syuio().setProtocolApp(new SimpleProtocolApplication(this, reflex));
                 this.isInit = true;
             }
         }
@@ -49,22 +49,20 @@ public class ProtoApplication {
     }
 
     private void put(Integer mType, String className) {
-        this.proto.put(mType , className);
+        this.proto.put(mType, className);
     }
 
-    public String getBeanName(Integer mType){
+    public String getBeanName(Integer mType) {
         return proto.get(mType);
     }
 
-    public Object getProtocolBean(Integer mType){
+    public Object getProtocolBean(Integer mType) {
         String beanName = getBeanName(mType);
-        if (StringUtils.isNotEmpty(beanName)&&StringUtils.isNotBlank(beanName)){
+        if (StringUtils.isNotEmpty(beanName) && StringUtils.isNotBlank(beanName)) {
             return ioc.getBean(beanName);
         }
         return null;
     }
-
-
 
 
 }

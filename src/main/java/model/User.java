@@ -1,6 +1,5 @@
 package model;
 
-import com.syuio.annotation.InjProtocol;
 import com.syuio.annotation.Protocol;
 
 /**

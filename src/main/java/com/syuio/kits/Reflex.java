@@ -21,4 +21,16 @@ public class Reflex {
         }
         return null;
     }
+
+    public static Object newInstance(Class<?> clazz) {
+        Assert.notNull(clazz);
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

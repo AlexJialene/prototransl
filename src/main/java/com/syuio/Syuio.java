@@ -31,7 +31,7 @@ public class Syuio {
         return SyuioHelper.s;
     }
 
-    public boolean start(Class<?> applicationClass) {
+    public boolean start() {
         this.getConfig().loadSyuioConfig("classpath:syuio.properties");
         if (!getConfig().isInit()) {
             this.getConfig().setEnvironment();

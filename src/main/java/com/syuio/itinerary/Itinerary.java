@@ -15,7 +15,6 @@ public class Itinerary {
     private String beLongBeanName;
     private Method action;
     private String actionName;
-    private Integer mType;
     private Map<String, String> param = VolumeKit.newHashMap();
 
     public Itinerary() {
@@ -61,11 +60,11 @@ public class Itinerary {
         this.param = param;
     }
 
-    public Integer getmType() {
-        return mType;
+    public String getBeLongBeanName() {
+        return beLongBeanName;
     }
 
-    public void setmType(Integer mType) {
-        this.mType = mType;
+    public void setBeLongBeanName(String beLongBeanName) {
+        this.beLongBeanName = beLongBeanName;
     }
 }

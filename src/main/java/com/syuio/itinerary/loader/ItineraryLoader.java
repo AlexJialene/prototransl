@@ -1,8 +1,11 @@
 package com.syuio.itinerary.loader;
 
 import com.syuio.itinerary.Itinerary;
+import com.syuio.itinerary.ItineraryMappers;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,5 +15,6 @@ import java.util.List;
  */
 public interface ItineraryLoader {
 
-    List<Itinerary> load(Class<?> clazz);
+    Map<Integer , Itinerary> load(Class<?> clazz);
+
 }

@@ -8,6 +8,7 @@ import com.syuio.config.Configuration;
 import com.syuio.cr.Cr;
 import com.syuio.cr.DynamicFinder;
 import com.syuio.cr.finder.ClassFinder;
+import com.syuio.itinerary.ItineraryBuilder;
 import com.syuio.kits.Assert;
 import com.syuio.kits.ClassInfo;
 import com.syuio.kits.VolumeKit;
@@ -32,6 +33,7 @@ import java.util.Collection;
 public final class CrAnnotationLoader implements CrLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(CrAnnotationLoader.class);
     private Syuio syuio = Syuio.syuio();
+
     public CrAnnotationLoader() {
     }
 
@@ -49,13 +51,11 @@ public final class CrAnnotationLoader implements CrLoader {
             Collection<ClassInfo> protocol = find(protoclPackage, configuration.isScanRecursively(), Protocol.class);
             Collection<ClassInfo> basisProtocol = find(protoclPackage, configuration.isScanRecursively(), BasisProtocol.class);
             Collection<ClassInfo> declaredProtocol = (Collection<ClassInfo>) Reflex.findInternalClassByAnno(basisProtocol, Protocol.class);
+            Collection<ClassInfo> service = find(servicePackage, configuration.isScanRecursively(), ProtocolService.class);
             if (VolumeKit.isNotEmpty(declaredProtocol))
                 protocol.addAll(declaredProtocol);
-            Collection<ClassInfo> service = find(servicePackage, configuration.isScanRecursively(), ProtocolService.class);
-            ItineraryMappers itineraryMappers = new ItineraryMappers();
-            itineraryMappers.distributeItinerary(service);
             ProtoApplication protoApplication = new ProtoApplication(cr);
-            protoApplication.initProtocol(protocol , itineraryMappers);
+            protoApplication.initProtocol(protocol, new ItineraryBuilder(service).build());
         }
     }
 
