@@ -1,6 +1,7 @@
 package com.syuio.proto.handle;
 
 import com.syuio.proto.ProtoApplication;
+import com.syuio.proto.pack.ProtoBuffer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,10 +13,6 @@ public class SimpleProtocolApplication implements ProtocolApp{
     private ProtoApplication application;
     private ProtocolReflex reflex;
 
-    public SimpleProtocolApplication(ProtoApplication application) {
-        this.application = application;
-    }
-
     public SimpleProtocolApplication(ProtoApplication protoApplication, ProtocolReflex reflex) {
         this.application = protoApplication;
         this.reflex = reflex;
@@ -25,9 +22,9 @@ public class SimpleProtocolApplication implements ProtocolApp{
         this.reflex = reflex;
     }
 
+
     @Override
-    public void receive(byte[] message) {
+    public void receive(ProtoBuffer buffer) {
 
     }
-
 }

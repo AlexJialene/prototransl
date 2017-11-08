@@ -1,5 +1,7 @@
 package com.syuio.proto.handle;
 
+import com.syuio.proto.pack.ProtoBuffer;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Alex_
@@ -8,5 +10,5 @@ package com.syuio.proto.handle;
  */
 public interface ProtocolApp {
 
-    void receive(byte[] message);
+    void receive(ProtoBuffer buffer);
 }
