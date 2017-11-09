@@ -2,6 +2,7 @@ package com.syuio.cr;
 
 import com.syuio.cr.loader.CrLoader;
 import com.syuio.kits.Assert;
+import com.syuio.kits.Reflex;
 import com.syuio.kits.VolumeKit;
 import com.syuio.kits.Target;
 import org.slf4j.Logger;
@@ -57,6 +58,15 @@ public final class CrApplication implements Cr {
     }
 
     @Override
+    public Class<?> getBeanClass(String var1) {
+        Assert.notNull(var1);
+        BeanDetermine beanDetermine = this.map.get(var1);
+        if (null != beanDetermine)
+            return beanDetermine.getClazz();
+        return null;
+    }
+
+    @Override
     public void setBean(Class<?> var1, Object var2) {
         Assert.notNull(var2);
         BeanDetermine beanDetermine = map.get(var1.getName());
@@ -74,13 +84,7 @@ public final class CrApplication implements Cr {
             if (beanDetermine.isSignle())
                 return beanDetermine.getBean();
             else {
-                try {
-                    return beanDetermine.getClazz().newInstance();
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                return Reflex.newInstance(beanDetermine.getClazz());
             }
 
         }

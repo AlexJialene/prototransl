@@ -25,6 +25,8 @@ public interface Cr {
 
     void addBean(Class<?> var1);
 
+    Class<?> getBeanClass(String var1);
+
     List<BeanDetermine> getDetermines();
 
     List<Object> getBeans();
