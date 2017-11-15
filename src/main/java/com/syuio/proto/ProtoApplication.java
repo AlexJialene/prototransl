@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -99,7 +100,6 @@ public class ProtoApplication {
         Assert.notNull(obj, "[error] - Container error: Cannot get belong mType's Object");
         if (!fieldMap.containsKey(mType)) {
             //Realize the com.syuio.proto.pack.app package class
-            //handle
             byte[] var1 = buffer.takeBuff(buffer.getmProtolLen());
             UnpackExecute unpackExecute = new UnpackExecute(var1);
             try {
@@ -114,14 +114,34 @@ public class ProtoApplication {
                 e.printStackTrace();
             }
         } else {
+            byte[] var2 = buffer.takeBuff(buffer.getmProtolLen());
+            UnpackExecute unpackExecute = new UnpackExecute(var2);
             ProtocolField[] protocolFields = getprotocolFields(mType);
-
+            Arrays.stream(protocolFields).forEach(field -> {
+                if (!field.isUintField()){
+                    //assemblyField(obj ,field , unpackExecute);
+                }
+            });
             return null;
         }
         return null;
     }
 
+    private void assemblyField(Object obj, ProtocolField field , UnpackExecute unpackExecute) throws IllegalAccessException {
+        if (!field.isUintField()){
+            Field var1 = field.getField();
+            var1.setAccessible(true);
+            switch (field.getType().getName()){
+                case "java.lang.String":
+                    var1.set(obj ,unpackExecute.popString());
+                    break;
+
+            }
+        }
+    }
+
     public ProtocolField[] getprotocolFields(Integer mType) {
         return fieldMap.get(mType);
     }
+
 }
