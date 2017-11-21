@@ -117,26 +117,43 @@ public class ProtoApplication {
             byte[] var2 = buffer.takeBuff(buffer.getmProtolLen());
             UnpackExecute unpackExecute = new UnpackExecute(var2);
             ProtocolField[] protocolFields = getprotocolFields(mType);
-            Arrays.stream(protocolFields).forEach(field -> {
-                if (!field.isUintField()){
-                    //assemblyField(obj ,field , unpackExecute);
-                }
-            });
-            return null;
+            Arrays.stream(protocolFields).forEach(field -> assemblyField(obj, field, unpackExecute));
+            return obj;
         }
         return null;
     }
 
-    private void assemblyField(Object obj, ProtocolField field , UnpackExecute unpackExecute) throws IllegalAccessException {
-        if (!field.isUintField()){
+    private void assemblyField(Object obj, ProtocolField field, UnpackExecute unpackExecute) {
+        try {
             Field var1 = field.getField();
             var1.setAccessible(true);
-            switch (field.getType().getName()){
+            switch (field.getType().getName()) {
                 case "java.lang.String":
-                    var1.set(obj ,unpackExecute.popString());
+                    var1.set(obj, unpackExecute.popString());
                     break;
-
+                case "int":
+                case "java.lang.Integer":
+                    var1.set(obj, unpackExecute.popUint32().intValue());
+                    break;
+                case "long":
+                case "java.lang.Long":
+                    var1.set(obj, unpackExecute.popUint64().longValue());
+                    break;
+                case "com.syuio.proto.pack.entity.Uint8":
+                    var1.set(obj, unpackExecute.popUint8());
+                    break;
+                case "com.syuio.proto.pack.entity.Uint32":
+                    var1.set(obj, unpackExecute.popUint32());
+                    break;
+                case "com.syuio.proto.pack.entity.Uint16":
+                    var1.set(obj, unpackExecute.popUint16());
+                    break;
+                case "com.syuio.proto.pack.entity.Uint64":
+                    var1.set(obj, unpackExecute.popUint64());
+                    break;
             }
+        } catch (IllegalAccessException e) {
+            LOGGER.error("[error] - Field UnpackProto assembly failed", e);
         }
     }
 

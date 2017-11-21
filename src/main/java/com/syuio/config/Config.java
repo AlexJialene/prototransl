@@ -170,7 +170,7 @@ public class Config {
     public String get(String key) {
         String prop = this.config.get(key);
         if (null == prop)
-            LOGGER.error("[Error] - cannot load properties value :{}={}", key, this.config.get(key));
+            LOGGER.warn("[Warn] - cannot load properties value :{}={}", key, this.config.get(key));
         return prop;
     }
 

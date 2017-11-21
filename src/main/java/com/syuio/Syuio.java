@@ -36,7 +36,7 @@ public class Syuio {
         if (!getConfig().isInit()) {
             this.getConfig().setEnvironment();
             this.getIoc().load(CrAnnotationLoader::new);
-            //this.init();
+            this.init();
         }
         return true;
     }

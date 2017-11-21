@@ -3,6 +3,7 @@ package com.syuio.proto.handle;
 import com.syuio.kits.Assert;
 import com.syuio.proto.ProtoApplication;
 import com.syuio.proto.pack.ProtoBuffer;
+import com.syuio.proto.pack.adapter.Pack;
 import com.syuio.proto.pack.adapter.UnpackExecute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +34,15 @@ public class SimpleProtocolApplication implements ProtocolApp {
             return;
         Integer mType = getProtocolType(buffer);
         Object obj = application.getProtocolUnpackBean(mType, buffer);
-        LOGGER.debug("receive message - mType => {}", mType);
+        LOGGER.info("receive message - mType => {}", mType);
         Assert.notNull(mType,"[error] - Parsing protocol error: cannot parsing protocol's mType value");
         Assert.notNull(obj,"[error] - Parsing protocol error: cannot parsing protocol's body");
+        buffer.setmProtolLen(-1);
         reflex.reflex(mType , obj);
     }
 
     private Integer getProtocolType(ProtoBuffer buffer) {
-        byte[] tmpBuff = buffer.getBuff(2);
+        byte[] tmpBuff = buffer.takeBuff(2);
         UnpackExecute unpack = new UnpackExecute(tmpBuff);
         return unpack.popUint16().intValue();
     }
@@ -48,12 +50,13 @@ public class SimpleProtocolApplication implements ProtocolApp {
     private boolean checkProtocol(ProtoBuffer buffer) {
         int len = buffer.getmProtolLen();
         if (0 >= len) {
-            if (2 > len) {
+            if (2 > buffer.len()) {
                 return false;
             }
             byte[] lenBuff = buffer.takeBuff(2);
             UnpackExecute unpackExecute = new UnpackExecute(lenBuff);
-            buffer.setmProtolLen(unpackExecute.popUint16().intValue());
+            //Protocol type does not require type of content,so remove two len
+            buffer.setmProtolLen(unpackExecute.popUint16().intValue()-2);
         }
         if (buffer.len() >= buffer.getmProtolLen())
             return true;

@@ -1,6 +1,7 @@
 package com.syuio.proto.handle;
 
 import com.syuio.proto.pack.ProtoBuffer;
+import com.syuio.proto.pack.adapter.Pack;
 
 /**
  * Created by IntelliJ IDEA.

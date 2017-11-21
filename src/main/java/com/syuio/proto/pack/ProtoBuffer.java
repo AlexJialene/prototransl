@@ -16,6 +16,7 @@ public class ProtoBuffer {
 
     public ProtoBuffer() {
         byteBuffer = ByteBuffer.allocate(MAX_PROTO_LEN);
+        byteBuffer.flip();
     }
 
     public void addBuff(ByteBuffer buffer) {
