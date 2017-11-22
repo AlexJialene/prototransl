@@ -12,6 +12,7 @@ import com.syuio.proto.handle.ProtocolReflex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
@@ -35,8 +36,22 @@ public class ItineraryMappers implements ProtocolReflex {
     }
 
     @Override
-    public void reflex(Integer mType, Object obj) {
-        //TODO
+    public void reflex(Integer var1, Object var2) {
+        Itinerary itinerary = getItinerary(var1);
+        if (null == itinerary){
+            LOGGER.warn("[Warn] - Service method not found mType => {}" , var1);
+            return ;
+        }
+        Method method = itinerary.getAction();
+        Object obj = this.ioc.getBean(itinerary.getBeLongBeanName());
+        try {
+            method.invoke(obj , var2);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
     }
 
     protected void distributeItinerary(Class<?> clazz) {
@@ -47,4 +62,9 @@ public class ItineraryMappers implements ProtocolReflex {
         }
         ioc.addBean(clazz);
     }
+
+    protected Itinerary getItinerary(Integer var1){
+        return methodPool.get(var1);
+    }
+
 }

@@ -202,6 +202,6 @@ public class Config {
 
     public Integer getInteger(String key) {
         String value = this.get(key);
-        return StringUtils.isNotBlank(value) ? Integer.valueOf(key) : null;
+        return StringUtils.isNotBlank(value) ? Integer.valueOf(value) : null;
     }
 }
