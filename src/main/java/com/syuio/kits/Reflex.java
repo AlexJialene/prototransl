@@ -1,6 +1,11 @@
 package com.syuio.kits;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,6 +16,7 @@ import java.util.stream.Collectors;
  * Time: 14:47
  */
 public class Reflex {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Reflex.class);
 
     public static Collection<?> findInternalClassByAnno(Collection<ClassInfo> collection, Class<? extends Annotation> anno) {
         if (VolumeKit.isNotEmpty(collection)) {
@@ -33,4 +39,33 @@ public class Reflex {
         }
         return null;
     }
+
+    public static Object invoke(Method var1, Object var2, Object var3) {
+        Assert.notNull(var1);
+        Assert.notNull(var2);
+        Assert.notNull(var3);
+        try {
+            var1.invoke(var2, var3);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return var2;
+    }
+
+    public static Method getMethod(Class<?> var1, String var2, Class<?> var3) {
+        try {
+            return var1.getMethod(var2, var3);
+        } catch (NoSuchMethodException e) {
+            LOGGER.error("[error] - method unpackProto not found", e);
+        }
+        return null;
+    }
+
+    public static Method[] getMethods(Class<?> var1){
+        return var1.getMethods();
+    }
+
+
 }

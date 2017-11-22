@@ -102,17 +102,8 @@ public class ProtoApplication {
             //Realize the com.syuio.proto.pack.app package class
             byte[] var1 = buffer.takeBuff(buffer.getmProtolLen());
             UnpackExecute unpackExecute = new UnpackExecute(var1);
-            try {
-                Method method = clazz.getMethod("unpackProto", Unpack.class);
-                method.invoke(obj, unpackExecute);
-                return obj;
-            } catch (NoSuchMethodException e) {
-                LOGGER.error("[error] - method unpackProto not found", e);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            Method method = Reflex.getMethod(clazz , "unpackProto", Unpack.class);
+            Reflex.invoke(method , obj , unpackExecute);
         } else {
             byte[] var2 = buffer.takeBuff(buffer.getmProtolLen());
             UnpackExecute unpackExecute = new UnpackExecute(var2);

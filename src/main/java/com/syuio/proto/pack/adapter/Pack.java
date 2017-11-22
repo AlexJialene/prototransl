@@ -15,8 +15,6 @@ public interface Pack {
 
     int size();
 
-    byte[] toBytes();
-
     Pack push(byte val);
 
     Pack push(Uint8 val);
@@ -28,6 +26,8 @@ public interface Pack {
     Pack push(Uint64 val);
 
     Pack push(String val);
+
+    byte[] toBytes();
 
     Pack push(byte[] val);
 

@@ -44,14 +44,7 @@ public class ItineraryMappers implements ProtocolReflex {
         }
         Method method = itinerary.getAction();
         Object obj = this.ioc.getBean(itinerary.getBeLongBeanName());
-        try {
-            method.invoke(obj , var2);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
+        Reflex.invoke(method , obj , var2);
     }
 
     protected void distributeItinerary(Class<?> clazz) {
