@@ -41,6 +41,11 @@ public class SimpleProtocolApplication implements ProtocolApp {
         reflex.reflex(mType , obj);
     }
 
+    @Override
+    public void pack(Object var1) {
+
+    }
+
     private Integer getProtocolType(ProtoBuffer buffer) {
         byte[] tmpBuff = buffer.takeBuff(2);
         UnpackExecute unpack = new UnpackExecute(tmpBuff);

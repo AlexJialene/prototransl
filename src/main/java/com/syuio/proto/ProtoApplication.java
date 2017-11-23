@@ -130,6 +130,10 @@ public class ProtoApplication {
                 case "java.lang.Long":
                     var1.set(obj, unpackExecute.popUint64().longValue());
                     break;
+                case "short":
+                case "java.lang.Short":
+                    var1.set(obj , unpackExecute.popUint16().shortValue());
+                    break;
                 case "com.syuio.proto.pack.entity.Uint8":
                     var1.set(obj, unpackExecute.popUint8());
                     break;

@@ -12,4 +12,6 @@ import com.syuio.proto.pack.adapter.Pack;
 public interface ProtocolApp {
 
     void receive(ProtoBuffer buffer);
+
+    void pack(Object var1);
 }
