@@ -34,9 +34,9 @@ public class ClassPathFinder implements ClassFinder {
     public Set<ClassInfo> getClass(String packageName, Class<?> clazz, Class<? extends Annotation> anno, boolean recursive) {
         Assert.notBlank(packageName);
         Set<ClassInfo> set = VolumeKit.newHashSet();
-        packageName = packageName.replace(".", "/");
+        String packageDirName = packageName.replace(".", "/");
         try {
-            Enumeration dirs = Thread.currentThread().getContextClassLoader().getResources(packageName);
+            Enumeration dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
             //Enumeration dirs = this.getClass().getClassLoader().getResources(packageName);
             while (dirs.hasMoreElements()) {
                 URL url = (URL) dirs.nextElement();

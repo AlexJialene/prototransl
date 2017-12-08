@@ -18,12 +18,19 @@ import java.util.stream.Collectors;
 public class Reflex {
     private static final Logger LOGGER = LoggerFactory.getLogger(Reflex.class);
 
-    public static Collection<?> findInternalClassByAnno(Collection<ClassInfo> collection, Class<? extends Annotation> anno) {
+    public static Collection<ClassInfo> findInternalClassByAnno(Collection<ClassInfo> collection, Class<? extends Annotation> anno) {
         if (VolumeKit.isNotEmpty(collection)) {
-            return collection.stream()
+            Collection<Class> clazzs = collection.stream()
                     .flatMap(classInfo -> Arrays.stream(classInfo.getClazz().getDeclaredClasses())
                             .filter(aClass -> null != aClass.getAnnotation(anno)))
                     .collect(Collectors.toCollection(HashSet::new));
+            if (VolumeKit.isNotEmpty(clazzs)) {
+                Collection<ClassInfo> classInfos = VolumeKit.newHashSet();
+                clazzs.forEach(clazz -> {
+                    classInfos.add(new ClassInfo(clazz));
+                });
+                return classInfos;
+            }
         }
         return null;
     }
@@ -63,7 +70,7 @@ public class Reflex {
         return null;
     }
 
-    public static Method[] getMethods(Class<?> var1){
+    public static Method[] getMethods(Class<?> var1) {
         return var1.getMethods();
     }
 
