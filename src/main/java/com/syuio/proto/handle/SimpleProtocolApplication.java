@@ -1,5 +1,6 @@
 package com.syuio.proto.handle;
 
+import com.syuio.annotation.Protocol;
 import com.syuio.kits.Assert;
 import com.syuio.proto.ProtoApplication;
 import com.syuio.proto.pack.ProtoBuffer;
@@ -7,6 +8,8 @@ import com.syuio.proto.pack.adapter.Pack;
 import com.syuio.proto.pack.adapter.UnpackExecute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.annotation.Annotation;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,8 +45,8 @@ public class SimpleProtocolApplication implements ProtocolApp {
     }
 
     @Override
-    public void pack(Object var1) {
-
+    public byte[] pack(Object var1) {
+        return application.pack(var1);
     }
 
     private Integer getProtocolType(ProtoBuffer buffer) {

@@ -31,7 +31,7 @@ public class Syuio {
         return SyuioHelper.s;
     }
 
-    public boolean start() {
+    public boolean initialize() {
         this.getConfig().loadSyuioConfig("classpath:syuio.properties");
         if (!getConfig().isInit()) {
             this.getConfig().setEnvironment();
@@ -49,7 +49,7 @@ public class Syuio {
         return config;
     }
 
-    public void init() {
+    protected void init() {
         if (!this.isInit)
             this.isInit = true;
     }

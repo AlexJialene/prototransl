@@ -9,6 +9,6 @@ package com.syuio;
 public class Application {
 
     public static void main(String[] args) {
-        Syuio.syuio().start();
+        //Syuio.syuio().start();
     }
 }

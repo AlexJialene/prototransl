@@ -28,7 +28,6 @@ public class ItineraryBuilder {
         if (VolumeKit.isNotEmpty(serviceClass)) {
             serviceClass.stream().forEach(classInfo -> {
                 mappers.distributeItinerary(classInfo.getClazz());
-
             });
 
         }

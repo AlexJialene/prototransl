@@ -13,5 +13,5 @@ public interface ProtocolApp {
 
     void receive(ProtoBuffer buffer);
 
-    void pack(Object var1);
+    byte[] pack(Object var1);
 }

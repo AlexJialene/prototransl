@@ -9,7 +9,6 @@ import java.nio.ByteBuffer;
  * Time: 18:09
  */
 public class ProtoBuffer {
-    //the port
     private static final int MAX_PROTO_LEN = 1024 * 64 * 2;
     private ByteBuffer byteBuffer;
     private int mProtolLen = -1;
