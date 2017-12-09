@@ -9,10 +9,7 @@ import com.syuio.cr.Cr;
 import com.syuio.cr.DynamicFinder;
 import com.syuio.cr.finder.ClassFinder;
 import com.syuio.itinerary.ItineraryBuilder;
-import com.syuio.kits.Assert;
-import com.syuio.kits.ClassInfo;
-import com.syuio.kits.VolumeKit;
-import com.syuio.kits.Reflex;
+import com.syuio.kits.*;
 import com.syuio.itinerary.ItineraryMappers;
 import com.syuio.itinerary.loader.ItineraryAnnotationLoader;
 import com.syuio.itinerary.loader.ItineraryLoader;
@@ -48,10 +45,10 @@ public final class CrAnnotationLoader implements CrLoader {
             Assert.notNull(protoclPackage, "[init failed] - syuio.protocol.protocolPackage must not be null");
 
             //get Protocol Class of BasisProtol's Annotation
-            Collection<ClassInfo> protocol = find(protoclPackage, configuration.isScanRecursively(), Protocol.class);
-            Collection<ClassInfo> basisProtocol = find(protoclPackage, configuration.isScanRecursively(), BasisProtocol.class);
-            Collection<ClassInfo> declaredProtocol = Reflex.findInternalClassByAnno(basisProtocol, Protocol.class);
-            Collection<ClassInfo> service = find(servicePackage, configuration.isScanRecursively(), ProtocolService.class);
+            Collection<ClassInfo> protocol = find(protoclPackage, configuration.isScanRecursively(), SystemKits.PROTOCOL_CLASS);
+            Collection<ClassInfo> basisProtocol = find(protoclPackage, configuration.isScanRecursively(), SystemKits.BASIS_PROTOCOL_CLASS);
+            Collection<ClassInfo> declaredProtocol = Reflex.findInternalClassByAnno(basisProtocol, SystemKits.PROTOCOL_CLASS);
+            Collection<ClassInfo> service = find(servicePackage, configuration.isScanRecursively(), SystemKits.PROTOCOL_SERVICE_CLASS);
             if (VolumeKit.isNotEmpty(declaredProtocol)){
                 protocol.addAll(declaredProtocol);
             }

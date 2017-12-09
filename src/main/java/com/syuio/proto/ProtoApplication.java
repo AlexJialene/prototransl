@@ -48,7 +48,7 @@ public class ProtoApplication {
         if (!this.isInit) {
             if (VolumeKit.isNotEmpty(protocol)) {
                 protocol.stream().forEach(classInfo -> {
-                    Protocol p = classInfo.getClazz().getAnnotation(Protocol.class);
+                    Protocol p = classInfo.getClazz().getAnnotation(SystemKits.PROTOCOL_CLASS);
                     if (null != p) {
                         put(p.mType(), classInfo.getClassName());
                         buildField(p.mType(), classInfo.getClazz());
@@ -88,7 +88,7 @@ public class ProtoApplication {
 
     private void buildField(Integer mType, Class<?> clazz) {
         Assert.notNull(clazz);
-        if (!isImplentUnpackAndPackApp(clazz, SystemEnumKits.UNPACK_PROTOCOL_CLASS_NAME.key)) {
+        if (!isImplentUnpackAndPackApp(clazz, SystemKits.UNPACK_PROTOCOL_CLASS_NAME)) {
             Field[] fields = clazz.getDeclaredFields();
             if (!VolumeKit.isEmpty(fields)) {
                 ProtocolField[] protocolFields = new ProtocolField[fields.length];
@@ -171,7 +171,7 @@ public class ProtoApplication {
         Integer mType = protocol.mType();
         Pack pack = new PackExecute();
         pack.push(Uint16.toUInt(mType));
-        if (isImplentUnpackAndPackApp(clazz, SystemEnumKits.PACK_PROTOCOL_CLASS_NAME.key)) {
+        if (isImplentUnpackAndPackApp(clazz, SystemKits.PACK_PROTOCOL_CLASS_NAME)) {
             Method method = Reflex.getMethod(clazz, "packProto", Pack.class);
             Reflex.invoke(method, var1, pack);
             return pack2Byte(pack);
