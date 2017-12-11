@@ -31,11 +31,9 @@ public class User {
     //忽略getter setter
 }
 ```
+或者在内部类使用
 
-### `@BasisProtocol`
-注明此类包含有协议内部类
 ```
-@BasisProtocol
 public class User {
     @Protocol(mType = 1)
     public static class User2{
@@ -73,6 +71,25 @@ public class ProtocolService {
 如果是服务端，建议每一个User配一个缓冲区
 
 ## 快速开始
+
+### `maven 配置`
+1.引入项目仓库
+```
+<repositories>
+    <repository>
+        <id>lamkeizyi-repo</id>
+        <url>https://raw.githubusercontent.com/AlexJialene/maven-repo/master/repository</url>
+    </repository>
+</repositories>
+```
+2.下载所需要的包
+```
+<dependency>
+    <groupId>syuio</groupId>
+    <artifactId>syuio</artifactId>
+    <version>1.0-beta-1</version>
+</dependency>
+```
 
 ### `syuio.properties`
 

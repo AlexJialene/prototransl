@@ -46,12 +46,12 @@ public final class CrAnnotationLoader implements CrLoader {
 
             //get Protocol Class of BasisProtol's Annotation
             Collection<ClassInfo> protocol = find(protoclPackage, configuration.isScanRecursively(), SystemKits.PROTOCOL_CLASS);
-            Collection<ClassInfo> basisProtocol = find(protoclPackage, configuration.isScanRecursively(), SystemKits.BASIS_PROTOCOL_CLASS);
-            Collection<ClassInfo> declaredProtocol = Reflex.findInternalClassByAnno(basisProtocol, SystemKits.PROTOCOL_CLASS);
+            //Collection<ClassInfo> basisProtocol = find(protoclPackage, configuration.isScanRecursively(), SystemKits.BASIS_PROTOCOL_CLASS);
+            //Collection<ClassInfo> declaredProtocol = Reflex.findInternalClassByAnno(basisProtocol, SystemKits.PROTOCOL_CLASS);
             Collection<ClassInfo> service = find(servicePackage, configuration.isScanRecursively(), SystemKits.PROTOCOL_SERVICE_CLASS);
-            if (VolumeKit.isNotEmpty(declaredProtocol)){
+            /*if (VolumeKit.isNotEmpty(declaredProtocol)){
                 protocol.addAll(declaredProtocol);
-            }
+            }*/
             ProtoApplication protoApplication = new ProtoApplication(cr);
             protoApplication.initProtocol(protocol, new ItineraryBuilder(service).build());
         }
