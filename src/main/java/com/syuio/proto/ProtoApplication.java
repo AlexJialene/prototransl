@@ -166,7 +166,7 @@ public class ProtoApplication {
     public byte[] pack(Object var1) {
         Assert.notNull(var1, "[error] - the Object must be not null");
         Class clazz = var1.getClass();
-        Protocol protocol = (Protocol) clazz.getAnnotation(Protocol.class);
+        Protocol protocol = (Protocol) clazz.getAnnotation(SystemKits.PROTOCOL_CLASS);
         Assert.notNull(protocol, "[error] - the Class " + clazz.getName() + " must be Protocol type");
         Integer mType = protocol.mType();
         Pack pack = new PackExecute();
