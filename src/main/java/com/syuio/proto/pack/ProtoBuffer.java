@@ -18,6 +18,11 @@ public class ProtoBuffer {
         byteBuffer.flip();
     }
 
+    public void addBuff(byte[] bytes){
+        addBuff(ByteBuffer.wrap(bytes));
+    }
+
+
     public void addBuff(ByteBuffer buffer) {
         int dataLen = buffer.limit() - buffer.position();
 

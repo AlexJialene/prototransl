@@ -24,6 +24,11 @@ public class PackExecute implements Pack {
         buffer.order(ByteOrder.BIG_ENDIAN);
     }
 
+    public PackExecute(int cap , ByteOrder byteOrder){
+        buffer = ByteBuffer.allocate(cap);
+        buffer.order(byteOrder);
+    }
+
     public int size() {
         return buffer.position();
     }

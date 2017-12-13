@@ -38,10 +38,14 @@ public class ProtoApplication {
     private final Map<Integer, ProtocolField[]> fieldMap = VolumeKit.newConcurrentHashMap(32);
     //private final Map<Integer, Class<?>> classMap = VolumeKit.newConcurrentHashMap(32);
     private Cr ioc;
+    private Integer packCap;
+    private ByteOrder byteOrder;
     private boolean isInit = false;
 
-    public ProtoApplication(Cr cr) {
+    public ProtoApplication(Cr cr, Integer packCap, ByteOrder byteOrder) {
         this.ioc = cr;
+        this.packCap = packCap;
+        this.byteOrder = byteOrder;
     }
 
     public void initProtocol(Collection<ClassInfo> protocol, ProtocolReflex reflex) {
@@ -169,7 +173,7 @@ public class ProtoApplication {
         Protocol protocol = (Protocol) clazz.getAnnotation(SystemKits.PROTOCOL_CLASS);
         Assert.notNull(protocol, "[error] - the Class " + clazz.getName() + " must be Protocol type");
         Integer mType = protocol.mType();
-        Pack pack = new PackExecute();
+        Pack pack = new PackExecute(this.packCap, this.byteOrder);
         pack.push(Uint16.toUInt(mType));
         if (isImplentUnpackAndPackApp(clazz, SystemKits.PACK_PROTOCOL_CLASS_NAME)) {
             Method method = Reflex.getMethod(clazz, "packProto", Pack.class);
@@ -235,7 +239,7 @@ public class ProtoApplication {
 
     private byte[] pack2Byte(Pack pack) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(pack.size() + 2);
-        byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        byteBuffer.order(this.byteOrder);
         byteBuffer.putShort((short) pack.size());
         byteBuffer.put(pack.toBytes(), 0, pack.size());
         byteBuffer.flip();

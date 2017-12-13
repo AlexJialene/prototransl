@@ -52,7 +52,7 @@ public final class CrAnnotationLoader implements CrLoader {
             /*if (VolumeKit.isNotEmpty(declaredProtocol)){
                 protocol.addAll(declaredProtocol);
             }*/
-            ProtoApplication protoApplication = new ProtoApplication(cr);
+            ProtoApplication protoApplication = new ProtoApplication(cr, configuration.getPackCapacity(), configuration.getByteOrder());
             protoApplication.initProtocol(protocol, new ItineraryBuilder(service).build());
         }
     }

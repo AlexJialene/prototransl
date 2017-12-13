@@ -8,9 +8,11 @@ syuio 是一个处理socket消息，针对socket消息提供打包以及解包�
 ## Preface
 * syuio 基于`jdk1.8`开发
 * syuio 写入buffer时的字节顺序为`ByteOrder.BIG_ENDIAN`,即为`大端`
-* syuio 单次发送量最大为`30kb`
+* 单次打包的最大容量默认为`512byte`
 * syuio 内置缓冲区容量为`128kb`
 * syuio 目前为测试阶段
+
+部分的默认配置可在syuio.properties文件里设置
 
 ## 协议消息
 1.针对socket消息处理分为协议消息的`解包`/`打包`,称为`Protocol` <br>
@@ -100,6 +102,8 @@ syuio.basePackage=com.syuio //保留参数
 syuio.protocol.servicePackage=com.model //逻辑处理类package
 syuio.protocol.protocolPackage=com.model //协议类 package
 syuio.scan.recursively=true //是否根据package 逐层遍历
+syuio.pack.capacity=1024 //单次打包的最大容量
+syuio.buffer.littleEndian=false //写入buffer的字节顺序，默认为false
 syuio.port=9876 //保留参数
 ```
 
@@ -116,8 +120,7 @@ syuio.initialize();
 Syuio syuio = Syuio.syuio();
 byte[] b = ...;
 ProtoBuffer protoBuffer = new ProtoBuffer();
-ByteBuffer byteBuffer =ByteBuffer.wrap(b);
-protoBuffer.addBuff(byteBuffer);
+protoBuffer.addBuff(b);
 //处理接收的消息，解包验证成功之后将自动反射逻辑处理
 syuio.createProtocolApp().receive(protoBuffer);
 ```
@@ -129,4 +132,86 @@ Syuio syuio = Syuio.syuio();
 byte[] b = syuio.createProtocolApp().pack(user);
 
 ```
+
+## 进阶
+
+这里介绍一下syuio的不同的用法，如自带`Uint`系列类的用法
+
+### `Uint 系列`
+> 上面已经介绍了一个协议载体类声明方法，这里介绍的是协议类里面的参数
+
+syuio 支持java自带的 `String` ， `Integer` , `Short` , `Long`，其他的java自带类型暂时不支持，
+除了String之外其他3个均可以由syuio 的Uint类代替，syuio也建议您使用Uint系列的代替java自带的类型；
+这样可能会给你的系统带来一点效率，特别是一条消息正在解包的时候。<br>
+
+支持的java类型对应Uint表
+
+java类型 | 对应的Uint类 
+--- | ---
+Integer | Uint32
+Short | Uint16
+Long | Uint64
+String |  
+
+科普一下：1 byte(字节) = 8 bit
+* Uint8 占1字节
+* Uint16 占2字节
+* Uint32 占4字节
+* Uint64 占8字节
+
+根据需要选择您要用的类型 <br>
+
+例子
+```
+@Protocol(mType = 1)
+public class User {
+    private String name;
+    private Uint32 phone;
+    private Uint8 sex；
+    private Uint16 field1；
+    private Uint64 field2；
+    //忽略getter setter
+}
+```
+
+### `Pack and Unpack`
+syuio除自动扫描您的协议载体进行解包和打包之外还提供一下两个接口类：
+
+* PackProtocol
+* UnpackProtocol
+
+这样的方式会带来一点效率以及您额外的逻辑编写，`缺点`：解包时候的顺序必须是您打包的顺序，默认按字段上下排序；<br>
+可实现这两个接口来达到您的目的：<br>
+
+1. Unpack
+```
+@Protocol(mType = 2)
+public class User2 implements UnpackProtocol{
+    private Uint8 ret;
+    private Uint32 phone;
+    //忽略构造方法
+    @Override
+    public boolean unpackProto(Unpack proto) {
+        this.ret = proto.popUint8();
+        this.phone = proto.popUint32();
+        return true;
+    }
+}
+```
+
+2. Pack
+```
+@Protocol(mType = 2)
+public class User2 implements PackProtocol{
+    private Uint8 ret;
+    private Uint32 phone;
+    //忽略构造方法
+    @Override
+    public void packProto(Pack proto) {
+        proto.push(ret);
+        proto.push(phone);
+    }
+}
+```
+
 
