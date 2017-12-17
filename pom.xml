@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>syuio</groupId>
-    <artifactId>syuio</artifactId>
-    <version>1.0-beta-2</version>
+    <groupId>prototransl</groupId>
+    <artifactId>com.prototransl</artifactId>
+    <version>1.0-beta-3</version>
     <properties>
         <jdk.version>1.8</jdk.version>
     </properties>
@@ -48,7 +48,7 @@
                 <version>2.4</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/syuio.properties</exclude>
+                        <exclude>**/transl.properties</exclude>
                     </excludes>
                 </configuration>
             </plugin>

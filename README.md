@@ -1,27 +1,33 @@
-## what is syuio
-syuio 是一个处理socket消息，针对socket消息提供打包以及解包，达到安全的目的，
-并能通过注解自动映射到逻辑处理；
-且适用于`websocket` `TCP` `UDP` 的消息工具。
+## what is prototransl
+prototransl 全称 protocol translate , 中文意思：协议转换 <br>
 
-> [一个根据`apache mina` + `syuio` 开发的TCP服务端例子](https://github.com/AlexJialene/imina)
+prototransl 是一个处理socket消息，针对socket消息提供打包以及解包，达到安全的目的，
+并能通过注解自动映射到逻辑处理；
+且适用于`websocket` `TCP` `UDP` <br>
+
+* 在网络传输环境中，我们称每条消息为`消息协议`，既然是协议，就避免不了协议的解包与打包，此类工作对于开发者来说是毫无意义可言。
+而protocol transl 则是解决这一问题而产生，自动为您所定义的协议载体提供解包与打包工作。
+* 既然是消息，那么就会存在被人抓包解读，prototransl 将对您的消息载体字段逐个打包转换，保证消息传输安全，除非您的载体代码公开。
+
+> [一个根据`apache mina` + `prototransl` 开发的TCP服务端例子](https://github.com/AlexJialene/imina)
 
 ## Preface
-* syuio 基于`jdk1.8`开发
-* syuio 写入buffer时的字节顺序为`ByteOrder.BIG_ENDIAN`,即为`大端`
-* 单次打包的最大容量默认为`512byte`
-* syuio 内置缓冲区容量为`128kb`
-* syuio 目前为测试阶段
+* prototransl 基于`jdk1.8`开发
+* prototransl 写入buffer时的字节顺序为`ByteOrder.BIG_ENDIAN`,即为`大端`
+* 单次发送的最大容量默认为`30kb`
+* prototransl 内置缓冲区容量为`128kb`
+* prototransl 目前为测试阶段
 
-部分的默认配置可在syuio.properties文件里设置
+部分的默认配置可在prototransl.properties文件里设置
 
 ## 协议消息
 1.针对socket消息处理分为协议消息的`解包`/`打包`,称为`Protocol` <br>
 2.根据协议头部信息自动匹配处理逻辑类，称为`ProtocolService` <br>
 3.自带4种单位类分别为 `Uint8` ，`Uint16` ， `Uint32` ， `Uint64` <br>
-4.支持Java `String` ， `Integer` , `Short` , `Long`
+4.支持Java `String` ， `Integer` , `Short` , `Long` , `Boolean`
 
 ## 容器
-内置了容器，接口类`Cr`中提供了一系列接口，您可`syuio.getIoc`以完成您的操作，
+内置了容器，接口类`Cr`中提供了一系列接口，您可`transl.getIoc`以完成您的操作，
 默认单例。
 
 ## 注解
@@ -49,7 +55,7 @@ public class User {
 ### `@ProtocolService`
 注明此类为逻辑处理类
 ```
-@com.syuio.annotation.ProtocolService
+@com.prototransl.annotation.ProtocolService
 public class ProtocolService {
     //逻辑处理方法
     
@@ -59,7 +65,7 @@ public class ProtocolService {
 ### `@Itinerary`
 注明此`方法`具体逻辑处理方法，`mType`对应`Protocol mType`，且参数为`Protocol`类
 ```
-@com.syuio.annotation.ProtocolService
+@com.prototransl.annotation.ProtocolService
 public class ProtocolService {
     @Itinerary(mType=1)
     public void proto1(User user){
@@ -89,59 +95,60 @@ public class ProtocolService {
 2.下载所需要的包
 ```
 <dependency>
-    <groupId>syuio</groupId>
-    <artifactId>syuio</artifactId>
-    <version>1.0-beta-1</version>
+    <groupId>prototransl</groupId>
+    <artifactId>com.prototransl</artifactId>
+    <version>1.0-beta-3</version>
 </dependency>
-```
-
-### `syuio.properties`
 
 ```
-syuio.basePackage=com.syuio //保留参数
-syuio.protocol.servicePackage=com.model //逻辑处理类package
-syuio.protocol.protocolPackage=com.model //协议类 package
-syuio.scan.recursively=true //是否根据package 逐层遍历
-syuio.pack.capacity=1024 //单次打包的最大容量
-syuio.buffer.littleEndian=false //写入buffer的字节顺序，默认为false
-syuio.port=9876 //保留参数
+
+### `prototransl.properties`
+
+```
+prototransl.basePackage=com.prototransl //保留参数
+prototransl.protocol.servicePackage=com.model //逻辑处理类package
+prototransl.protocol.protocolPackage=com.model //协议类 package
+prototransl.scan.recursively=true //是否根据package 逐层遍历
+prototransl.pack.capacity=1024 //单次打包的最大容量
+prototransl.buffer.littleEndian=false //写入buffer的字节顺序，默认为false
+prototransl.port=9876 //保留参数
 ```
 
 ### `启动`
 ```
-Syuio syuio = Syuio.syuio();
-syuio.initialize();
+Transl transl = Transl.transl();
+transl.initialize();
 
 ```
 
 ### `接收消息`
 
 ```
-Syuio syuio = Syuio.syuio();
+Transl transl = Transl.transl();
 byte[] b = ...;
 ProtoBuffer protoBuffer = new ProtoBuffer();
 protoBuffer.addBuff(b);
 //处理接收的消息，解包验证成功之后将自动反射逻辑处理
-syuio.createProtocolApp().receive(protoBuffer);
+transl.createProtocolApp().receive(protoBuffer);
 ```
 
 ### `打包`
 ```
-Syuio syuio = Syuio.syuio();
+Transl transl = Transl.transl();
 //传入协议类返回byte[]
-byte[] b = syuio.createProtocolApp().pack(user);
+byte[] b = transl.createProtocolApp().pack(user);
 
 ```
 
 ## 进阶
 
-这里介绍一下syuio的不同的用法，如自带`Uint`系列类的用法
+这里介绍一下prototransl的不同的用法，如自带`Uint`系列类的用法
 
 ### `Uint 系列`
 > 上面已经介绍了一个协议载体类声明方法，这里介绍的是协议类里面的参数
 
-syuio 支持java自带的 `String` ， `Integer` , `Short` , `Long`，其他的java自带类型暂时不支持，
-除了String之外其他3个均可以由syuio 的Uint类代替，syuio也建议您使用Uint系列的代替java自带的类型；
+prototransl 支持java自带的 `String` ， `Integer` , `Short` , `Long`，其他的java自带类型暂时不支持，
+除了String之外其他3个均可以由prototransl 的Uint类代替，prototransl也建议您使用Uint系列的代替java自带的类型；
 这样可能会给你的系统带来一点效率，特别是一条消息正在解包的时候。<br>
 
 支持的java类型对应Uint表
@@ -151,6 +158,7 @@ java类型 | 对应的Uint类
 Integer | Uint32
 Short | Uint16
 Long | Uint64
+Boolean | Uint8
 String |  
 
 科普一下：1 byte(字节) = 8 bit
@@ -175,7 +183,7 @@ public class User {
 ```
 
 ### `Pack and Unpack`
-syuio除自动扫描您的协议载体进行解包和打包之外还提供一下两个接口类：
+prototransl除自动扫描您的协议载体进行解包和打包之外还提供一下两个接口类：
 
 * PackProtocol
 * UnpackProtocol
