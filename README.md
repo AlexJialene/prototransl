@@ -9,7 +9,8 @@ prototransl 是一个处理socket消息，针对socket消息提供打包以及�
 而protocol transl 则是解决这一问题而产生，自动为您所定义的协议载体提供解包与打包工作。
 * 既然是消息，那么就会存在被人抓包解读，prototransl 将对您的消息载体字段逐个打包转换，保证消息传输安全，除非您的载体代码公开。
 
-> [一个根据`apache mina` + `prototransl` 开发的TCP服务端例子](https://github.com/AlexJialene/imina)
+> [一个根据`apache mina` + `prototransl` 开发的TCP服务端例子](https://github.com/AlexJialene/imina)<br>
+> [prototransl js版本 ](https://github.com/AlexJialene/ProtoTranslJs)
 
 ## Preface
 * prototransl 基于`jdk1.8`开发
