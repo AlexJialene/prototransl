@@ -25,6 +25,11 @@ public class Configuration {
     private Config config = new Config();
 
     public Configuration() {
+        LOGGER.info("======================prototransl====================");
+        LOGGER.info("|      auther:    Lamkeizyi                         |");
+        LOGGER.info("|      email:     467146659@qq.com                  |");
+        LOGGER.info("|      github:    https://github.com/AlexJialene    |");
+        LOGGER.info("=====================================================");
     }
 
     public void loadTranslConfig(String location) {
