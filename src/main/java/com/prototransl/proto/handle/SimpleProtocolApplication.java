@@ -52,6 +52,12 @@ public class SimpleProtocolApplication implements ProtocolApp {
     }
 
     @Override
+    public Object obj(ProtoBuffer buffer) {
+        //this unpack protocol and return the class obj
+        return null;
+    }
+
+    @Override
     public byte[] pack(Object var1) {
         return application.pack(var1);
     }

@@ -14,7 +14,7 @@ prototransl 是一个处理socket消息，针对socket消息提供打包以及�
 
 ## Preface
 * prototransl 基于`jdk1.8`开发
-* prototransl 写入buffer时的字节顺序为`ByteOrder.BIG_ENDIAN`,即为`大端`
+* prototransl 解包以及打包时的字节顺序为`ByteOrder.BIG_ENDIAN`,即为`大端`
 * 单次发送的最大容量默认为`30kb`
 * prototransl 内置缓冲区容量为`128kb`
 * prototransl 目前为测试阶段
